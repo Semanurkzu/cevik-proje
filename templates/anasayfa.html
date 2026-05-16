@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hikaye Atölyesi AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(14px);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0px 8px 30px rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            color: white;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin-top: 10px;
+            color: rgba(255,255,255,0.75);
+            font-size: 1rem;
+        }
+
+        form {
+            display: grid;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        label {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: 0.3s;
+        }
+
+        input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        select option {
+            background: #2c2c2c;
+            color: white;
+        }
+
+        input:focus, select:focus {
+            border: 1px solid #ff7eb3;
+            box-shadow: 0px 0px 10px rgba(255, 126, 179, 0.6);
+            transform: scale(1.01);
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            background: linear-gradient(90deg, #ff758c, #ff7eb3);
+            color: white;
+            transition: 0.3s;
+            box-shadow: 0px 6px 20px rgba(255, 120, 170, 0.35);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 30px rgba(255, 120, 170, 0.6);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result {
+            margin-top: 35px;
+            padding: 25px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0px 6px 20px rgba(0,0,0,0.25);
+        }
+
+        .result h2 {
+            font-size: 1.6rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .story-box {
+            color: rgba(255,255,255,0.85);
+            line-height: 1.7;
+            font-size: 1.05rem;
+            white-space: pre-line;
+        }
+
+        .story-box p {
+            margin-bottom: 10px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 15px;
+            margin-top: 10px;
+            box-shadow: 0px 6px 25px rgba(0,0,0,0.35);
+        }
+
+        footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.9rem;
+            }
+
+            .container {
+                padding: 22px;
+            }
+
+            button {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>✨ Hikaye Atölyesi AI</h1>
+            <p>Hayal gücünü konuştur, yapay zeka senin için hikaye yazsın 🚀</p>
+        </header>
+
+        <form method="POST">
+
+            <div>
+                <label>📌 Hikaye Konusu</label>
+                <input type="text" name="konu" placeholder="Örn: Kaybolan bir şehir..." required>
+            </div>
+
+            <div>
+                <label>🎭 Tür Seç</label>
+                <select name="tur">
+                    <option value="korku">👻 Korku</option>
+                    <option value="fantastik">🧙 Fantastik</option>
+                    <option value="dram">🎬 Dram</option>
+                    <option value="komedi">😂 Komedi</option>
+                    <option value="bilim_kurgu">🚀 Bilim Kurgu</option>
+                </select>
+            </div>
+
+            <div>
+                <label>🧑‍🚀 Ana Karakter İsmi</label>
+                <input type="text" name="karakter" placeholder="Örn: Elif" required>
+            </div>
+
+            <button type="submit">🚀 Hikaye Oluştur</button>
+
+        </form>
+
+        <!-- 🔥 AI HİKAYE SONUCU -->
+        {% if hikaye %}
+
+            <div class="result">
+                <h2>📖 Oluşturulan Hikaye</h2>
+                <div class="story-box">
+                    {{ hikaye }}
+                </div>
+            </div>
+
+            {% if sahneler %}
+            <div class="result">
+                <h2>🎬 Sahne Betimlemeleri</h2>
+                <div class="story-box">
+                    {% for s in sahneler %}
+                        <p>🎥 {{ s }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if video %}
+            <div class="result">
+                <h2>📽️ Oluşturulan Video</h2>
+                <video controls>
+                    <source src="{{ url_for('static', filename=video) }}" type="video/mp4">
+                </video>
+            </div>
+            {% endif %}
+
+        {% endif %}
+
+        <footer>
+            © 2026 Hikaye Atölyesi AI | Yapay Zeka Destekli Hikaye Üretimi
+        </footer>
+
+    </div>
+
+</body>
+</html>
